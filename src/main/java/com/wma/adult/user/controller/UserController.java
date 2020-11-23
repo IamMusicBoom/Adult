@@ -1,12 +1,14 @@
-package com.wma.adult.controller;
+package com.wma.adult.user.controller;
 
 import com.wma.adult.base.ResponseModule;
-import com.wma.adult.impl.UserRepository;
-import com.wma.adult.module.User;
+import com.wma.adult.user.impl.UserRepository;
+import com.wma.adult.user.module.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -25,13 +27,15 @@ public class UserController {
 
 
     @PostMapping("/saveUser")
-    public ResponseModule saveUser(@RequestParam("name")String name, @RequestParam("phone")String phone) {
+    public ResponseModule saveUser(@RequestParam("account")String account, @RequestParam("password")String password) {
         System.out.println("saveUser");
         User user = new User();
-        user.setName(name);
-        user.setPhone(phone);
+        user.setAccount(account);
+        user.setPassword(password);
         userRepository.save(user);
-        ResponseModule module = new ResponseModule(200,"保存成功",user);
+        Example<User> example = Example.of(user);
+        Optional<User> result = userRepository.findOne(example);
+        ResponseModule module = new ResponseModule(200,"保存成功",result.get());
         return module;
     }
 
