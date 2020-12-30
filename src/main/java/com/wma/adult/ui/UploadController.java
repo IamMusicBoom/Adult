@@ -10,4 +10,10 @@ public class UploadController {
     public String upload() {
         return "upload";
     }
+
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>登录/注册</title>
+</head>
+<body>
+<h1 th:inlines="text">注册</h1>
+<form method="post" action="/user/register">
+    <p>账号：<input type="text" name="account"></p>
+    <br>
+    <br>
+    <p>密码：<input type="text" name="password"></p>
+    <br>
+    <input type="submit" value="提交">
+</form>
+<br>
+<br>
+<h1 th:inlines="text">登录</h1>
+<form method="post" action="/user/login">
+    <p>账号：<input type="text" name="account"></p>
+    <br>
+    <br>
+    <p>密码：<input type="text" name="password"></p>
+    <br>
+    <input type="submit" value="提交">
+</form>
+<h1 th:inlines="text">用户信息修改</h1>
+<form method="post" action="/user/updateUser">
+    <p>id：<input type="text" name="id"></p>
+    <br>
+    <p>用户名：<input type="text" name="userName"></p>
+    <br>
+    <p>用户手机：<input type="text" name="userPhone"></p>
+    <br>
+    <p>用户邮箱：<input type="text" name="userEmail"></p>
+    <br>
+    <p>性别：<input type="text" name="sex"></p>
+    <br>
+    <p>生日：<input type="text" name="birthday"></p>
+    <br>
+    <p>省份：<input type="text" name="province"></p>
+    <br>
+    <p>城市：<input type="text" name="city"></p>
+    <br>
+    <p>地区：<input type="text" name="area"></p>
+    <br>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

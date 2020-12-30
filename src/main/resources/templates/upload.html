@@ -5,14 +5,18 @@
     <title>文件上传</title>
 </head>
 <body>
+<h1 th:inlines="text">单文件上传</h1>
 <form method="post" action="/uploadFile" enctype="multipart/form-data">
     <input type="file" name="file">
+    <p>DataId: <input type="String" name="dataId"></p>
+    <p>useFo: <input type="String" name="useFor"></p>
+    <p>table: <input type="String" name="table"></p>
     <br><br>
     <input type="submit" value="提交">
 </form>
 
-<h1 th:inlines="text">文件上传</h1>
-<form action="/uploadFiles" method="post" enctype="multipart/form-data" >
+<h1 th:inlines="text">多文件上传</h1>
+<form action="/uploadFiles" method="post" enctype="multipart/form-data">
     <p>选择文件1: <input type="file" name="fileName"/></p>
     <p>选择文件2: <input type="file" name="fileName"/></p>
     <p>选择文件3: <input type="file" name="fileName"/></p>

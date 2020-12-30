@@ -1,6 +1,8 @@
-package com.wma.adult.user.module;
+package com.wma.adult.user;
 
 import com.wma.adult.user.EncryptUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -8,8 +10,8 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)// 自增涨
+    private String id;
 // ----------------------------------------------------- 账户信息开始;
     /**
      * 用户账户
@@ -20,6 +22,12 @@ public class User {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 用户Token
+     */
+    private String token;
+
 // ----------------------------------------------------- 账户信息结束;
 
 
@@ -53,12 +61,12 @@ public class User {
     /**
      * 性别，0：男，1：女，2：其他
      */
-    private int sex;
+    private Integer sex;
 
     /**
-     * 国家
+     * 生日
      */
-    private String country;
+    private Long birthday;
 
     /**
      * 省份
@@ -75,6 +83,11 @@ public class User {
      */
     private String area;
 
+    /**
+     * 登录时间
+     */
+    private Long loginTime;
+
 
 
 // ----------------------------------------------------- 用户基本信息结束;
@@ -82,11 +95,11 @@ public class User {
     public User() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -104,6 +117,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUserName() {
@@ -146,20 +167,20 @@ public class User {
         this.bgWall = bgWall;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
-    public String getCountry() {
-        return country;
+    public Long getBirthday() {
+        return birthday;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setBirthday(Long birthday) {
+        this.birthday = birthday;
     }
 
     public String getProvince() {
@@ -184,5 +205,13 @@ public class User {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public Long getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Long loginTime) {
+        this.loginTime = loginTime;
     }
 }

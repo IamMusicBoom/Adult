@@ -1,5 +1,9 @@
 package com.wma.adult.controller;
 
+import com.wma.adult.Log;
+import com.wma.adult.user.User;
+import com.wma.adult.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,8 +19,15 @@ import java.util.List;
 
 @RestController
 public class FileController {
+    @Autowired
+    private UserService mUserService;
+
     @PostMapping("/uploadFile")
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public String upload(@RequestParam(value = "file", required = true) MultipartFile file
+            , @RequestParam(value = "dataId", required = true) String dataId
+            , @RequestParam(value = "useFor", required = true) String useFor
+            , @RequestParam(value = "table", required = true) String table) {
+        Log.d("upload", "dataId = " + dataId + " useFor = " + useFor + " table = " + table);
         if (file.isEmpty()) {
             return "文件为空";
         }
@@ -24,13 +35,27 @@ public class FileController {
             String fileName = file.getOriginalFilename();
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             System.out.println("文件名字：" + fileName + " 后缀名字：" + suffixName);
-            String path = "F:\\upload\\";
+            StringBuilder pathSB = new StringBuilder();
+            pathSB.append("F:").append(File.separator).append("upload").append(File.separator).append(table).append(File.separator);
+            String path = pathSB.toString();
             String filePath = path + fileName;
             File desc = new File(filePath);
             if (!desc.getParentFile().exists()) {
                 desc.getParentFile().mkdirs();
             }
             file.transferTo(desc);
+            String absolutePath = desc.getAbsolutePath();
+            String replace = absolutePath.replace(String.valueOf(File.separatorChar), "/");
+            if (table.equalsIgnoreCase("user")) {
+                User user = mUserService.getUserById(dataId);
+                if(useFor.equalsIgnoreCase("headImg")){
+                    user.setHeadImage(replace);
+                }
+                if(useFor.equalsIgnoreCase("bgWall")){
+                    user.setBgWall(replace);
+                }
+                mUserService.updateUser(user);
+            }
             System.out.println("path = " + desc.getAbsolutePath());
             return "上传成功";
         } catch (IOException e) {
